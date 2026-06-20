@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Lovable",
+    "website": "https://lovable.dev",
+    "pricing": "Enterprise | Teams from top companies build with Lovable | Product | Product Managers | Prototyping | Enterprise | Start for free. Upgrade to get the capacity that exactly matches your team's needs. | In addition to your credit balance, Pro and Business subscriptions include grants for building and hosting with Cloud. | Here are some example prompts and their cost: | User Prompt",
+    "target_customer": "Build apps, websites, and digital products faster using Lovable's AI-powered platform, no deep coding skills required.",
+    "core_features": [
+      "Templates",
+      "Discover templates"
+    ],
+    "technical_highlights": [
+      "React",
+      "Cloud",
+      "Deploy"
+    ]
+  },
+  {
+    "name": "Bolt",
+    "website": "https://bolt.new",
+    "pricing": "Bolt AI builder: Websites, apps & prototypes | Enterprise | Use your team's components and brand guidelines to build for production | The #1 professional vibe coding tool trusted by | Empowering product builders | Enterprise | Start for free. Upgrade as you go. | Free | Public and private projects | Choice of database provider",
+    "target_customer": "Build and scale high-performing websites & apps using your words. Join millions and start building today.",
+    "core_features": [
+      "Your company's design system, now in Bolt",
+      "Use your team's components and brand guidelines to build for production",
+      "Empowering product builders with the most powerful coding agents",
+      "Build big without breaking",
+      "Unlimited databases",
+      "SEO optimization so your project ranks from day one."
+    ],
+    "technical_highlights": [
+      "Github",
+      "Cloud",
+      "Database"
+    ]
+  },
+  {
+    "name": "v0",
+    "website": "https://v0.dev",
+    "pricing": "Enterprise | v0 Pro | Prompt. Build. Publish. | Go live instantly with one-click deployment to production in seconds. | Define colors, typography, and styles that you can use across projects. | Enterprise | Free | $5 of included monthly credits | Team Popular | $30 of included monthly credits per user",
+    "target_customer": "Your collaborative AI assistant to design, iterate, and scale full-stack applications for the web.",
+    "core_features": [
+      "Templates",
+      "Start with a template",
+      "Prompt. Build. Publish.",
+      "Integrate with apps",
+      "Deploy to Vercel",
+      "Edit with design mode",
+      "Start with templates"
+    ],
+    "technical_highlights": [
+      "Vercel",
+      "Github",
+      "Api",
+      "Full-Stack",
+      "Database",
+      "Deploy"
+    ]
+  },
+  {
+    "name": "Replit",
+    "website": "https://replit.com",
+    "pricing": "Products | Enterprise | Replit with Enterprise-grade security & controls | Business Apps | Rapid Prototyping",
+    "target_customer": "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
+    "core_features": [
+      "Design Freely",
+      "Build together"
+    ],
+    "technical_highlights": [
+      "Api",
+      "Full Stack",
+      "Database",
+      "Deploy"
+    ]
+  },
+  {
+    "name": "Durable",
+    "website": "https://durable.co",
+    "pricing": "Durable – AI Business Builder | Launch in minutes | Products | Start for free | The complete AI business builder | Launch a website, get customers, and grow your business faster with AI. Get online in 30 seconds. | Durable Pricing - Launch your site for $0 in seconds | Products | Start for free | Everything you need to build your business | Free",
+    "target_customer": "Build your business with Durable. Create a website with AI, get discovered with SEO and GEO, manage customers and grow faster with AI marketing tools. All with one app.",
+    "core_features": [
+      "AI image studio Easily create on-brand images for logos, ads, and your website.",
+      "SEO & GEO Drive high quality leads from Google AI and ChatGPT.",
+      "Reviews Get more reviews to increase your search visibility.",
+      "AI Website Builder",
+      "Website Templates",
+      "AI Image Generator",
+      "AI Brand Builder",
+      "AI Business Name Generator"
+    ],
+    "technical_highlights": [
+      "Api"
+    ]
+  }
+]

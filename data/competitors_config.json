@@ -1,0 +1,29 @@
+{
+  "competitors": [
+    {
+      "name": "Lovable",
+      "website": "https://lovable.dev",
+      "pricing_url": "https://lovable.dev/pricing"
+    },
+    {
+      "name": "Bolt",
+      "website": "https://bolt.new",
+      "pricing_url": "https://bolt.new/pricing"
+    },
+    {
+      "name": "v0",
+      "website": "https://v0.dev",
+      "pricing_url": "https://v0.dev/pricing"
+    },
+    {
+      "name": "Replit",
+      "website": "https://replit.com",
+      "pricing_url": "https://replit.com/pricing"
+    },
+    {
+      "name": "Durable",
+      "website": "https://durable.co",
+      "pricing_url": "https://durable.co/pricing"
+    }
+  ]
+}
