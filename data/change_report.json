@@ -1,0 +1,40 @@
+{
+  "compared_at": "2026-06-24 04:02 UTC",
+  "previous_snapshot": "2026-06-20",
+  "current_snapshot": "2026-06-24",
+  "competitors": [
+    {
+      "name": "Lovable",
+      "status": "changed",
+      "changes": [
+        "core_features"
+      ]
+    },
+    {
+      "name": "Bolt",
+      "status": "unchanged"
+    },
+    {
+      "name": "v0",
+      "status": "changed",
+      "changes": [
+        "pricing",
+        "core_features"
+      ]
+    },
+    {
+      "name": "Replit",
+      "status": "changed",
+      "changes": [
+        "core_features"
+      ]
+    },
+    {
+      "name": "Durable",
+      "status": "changed",
+      "changes": [
+        "pricing"
+      ]
+    }
+  ]
+}

@@ -216,6 +216,105 @@ def filter_core_features(items: list[str]) -> list[str]:
     return [item for item in items if is_valid_core_feature(item)]
 
 
+def extract_lovable_features(soups: list[BeautifulSoup], combined_lower: str) -> list[str]:
+    """Lovable: workflow headings + SSR keyword signals (nav <li> order is unreliable)."""
+    features: list[str] = []
+    heading_map = (
+        ("meet lovable", "AI app builder"),
+        ("start with an idea", "AI idea-to-app workflow"),
+        ("watch it come to life", "Live preview generation"),
+        ("refine and ship", "Refine and ship"),
+        ("discover templates", "Templates"),
+    )
+    for soup in soups:
+        for tag in soup.find_all(["h2", "h3"]):
+            lower = clean_text(tag.get_text(" ", strip=True)).lower()
+            for needle, label in heading_map:
+                if needle in lower and label not in features:
+                    features.append(label)
+
+    keyword_map = (
+        ("supabase", "Supabase integration"),
+        ("github", "GitHub sync"),
+        ("collaborat", "Real-time collaboration"),
+        ("deploy", "One-click deploy"),
+        ("chat", "AI chat builder"),
+        ("prototype", "Prototyping"),
+    )
+    for kw, label in keyword_map:
+        if kw in combined_lower and label not in features:
+            features.append(label)
+    return features
+
+
+def extract_replit_features(soups: list[BeautifulSoup], combined_lower: str) -> list[str]:
+    """Replit: product nav line in SSR + Agent keyword."""
+    features: list[str] = []
+    for soup in soups:
+        for li in soup.find_all("li"):
+            text = clean_text(li.get_text(" ", strip=True))
+            if "Agent" in text and "Databases" in text and "Integrations" in text:
+                for label in (
+                    "Replit Agent",
+                    "Collaborative design",
+                    "Databases",
+                    "Publish apps",
+                    "Integrations",
+                    "Mobile apps",
+                ):
+                    if label not in features:
+                        features.append(label)
+                break
+
+    if "agent" in combined_lower and "Replit Agent" not in features:
+        features.insert(0, "Replit Agent")
+    if "deploy" in combined_lower and "Deploy with AI" not in features:
+        features.append("Deploy with AI")
+    return features
+
+
+def extract_v0_features(soups: list[BeautifulSoup], combined_lower: str) -> list[str]:
+    """v0: all feature sections are present as h2/h3 headings in SSR HTML."""
+    features: list[str] = []
+    heading_map = (
+        ("start with a template",      "Templates"),
+        ("prompt. build. publish.",     "Prompt. Build. Publish."),
+        ("sync with a repo",            "Sync with a repo"),
+        ("integrate with apps",         "Integrate with apps"),
+        ("deploy to vercel",            "Deploy to Vercel"),
+        ("edit with design mode",       "Edit with design mode"),
+        ("create design systems",       "Design systems"),
+        ("agentic by default",          "Agentic workflows"),
+        ("create from your phone",      "Mobile creation"),
+        ("ship mobile sites",           "Mobile site publishing"),
+    )
+    for soup in soups:
+        for tag in soup.find_all(["h2", "h3"]):
+            lower = clean_text(tag.get_text(" ", strip=True)).lower()
+            for needle, label in heading_map:
+                if needle in lower and label not in features:
+                    features.append(label)
+    if "figma" in combined_lower and "Figma integration" not in features:
+        features.append("Figma integration")
+    return features
+
+
+SITE_FEATURE_EXTRACTORS = {
+    "Lovable": extract_lovable_features,
+    "Replit": extract_replit_features,
+    "v0":     extract_v0_features,
+}
+
+
+def extract_site_specific_features(name: str, pages: list[str]) -> list[str]:
+    extractor = SITE_FEATURE_EXTRACTORS.get(name)
+    if not extractor:
+        return []
+    soups = [BeautifulSoup(html, "html.parser") for html in pages]
+    combined_lower = "\n".join(pages).lower()
+    return extractor(soups, combined_lower)
+
+
 def extract_meta_description(soup: BeautifulSoup) -> str:
     tag = soup.find("meta", attrs={"name": re.compile(r"description", re.I)})
     if tag and tag.get("content"):
@@ -385,10 +484,12 @@ def collect_one(entry: dict[str, Any], session: requests.Session) -> dict[str, A
 
     list_features = extract_list_items(home_soup)
     heading_features = extract_headings_as_features(home_soup)
-    record["core_features"] = merge_unique(
+    site_features = extract_site_specific_features(name, pages)
+    generic_features = merge_unique(
         filter_core_features(list_features),
         filter_core_features(heading_features),
     )
+    record["core_features"] = merge_unique(site_features, generic_features, limit=12)
 
     pricing_parts: list[str] = []
     for html in pages:

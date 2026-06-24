@@ -209,6 +209,17 @@ This project currently monitors website builders, but the same pipeline could be
 
 ---
 
+## Data Quality Notes
+
+- Collection uses static HTML scraping (`requests` + BeautifulSoup); no JavaScript is executed.
+- Content injected by the browser after hydration is not captured.
+- Lovable and Replit use site-specific heading/keyword extractors to supplement the generic `<li>` pipeline.
+- v0 features are mapped directly from SSR `<h2>`/`<h3>` headings, which are fully present in the initial response.
+- Pricing is heuristic-based (regex on tier words and price tokens) and is not structured into comparable tiers.
+- Feature quality varies by competitor: Durable and v0 are strongest; Lovable and Replit required targeted fixes.
+
+---
+
 ## Future Work
 
 

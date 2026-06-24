@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""读取 competitors.json，生成 HTML 竞品分析报告。"""
+"""Read competitors.json and render an HTML competitive analysis report."""
 
 from __future__ import annotations
 
@@ -28,14 +28,14 @@ logger = logging.getLogger(__name__)
 def load_competitors(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         raise FileNotFoundError(
-            f"未找到 {path}，请先运行: python scripts/collect_competitors.py"
+            f"File not found: {path} — run: python scripts/collect_competitors.py"
         )
 
     with path.open(encoding="utf-8") as f:
         data = json.load(f)
 
     if not isinstance(data, list):
-        raise ValueError("competitors.json 格式错误，应为数组")
+        raise ValueError("competitors.json is not a list — check file format")
 
     return data
 
@@ -58,9 +58,9 @@ def build_overview_cards(competitors: list[dict[str, Any]]) -> str:
             <article class="card">
               <h3>{esc(c.get("name", ""))}</h3>
               <p><a href="{esc(c.get("website", ""))}" target="_blank" rel="noopener">{esc(c.get("website", ""))}</a></p>
-              <p class="label">目标客户</p>
+              <p class="label">Target Customer</p>
               <p>{esc(c.get("target_customer") or "—")}</p>
-              <p class="label">定价摘要</p>
+              <p class="label">Pricing Summary</p>
               <p>{esc(c.get("pricing") or "—")}</p>
             </article>
             """
@@ -79,9 +79,9 @@ def build_feature_matrix(competitors: list[dict[str, Any]]) -> str:
                 all_features.append(feat)
 
     if not all_features:
-        all_features = ["（暂无采集到的功能项）"]
+        all_features = ["(No features collected)"]
 
-    header = "<tr><th>功能 / 竞品</th>" + "".join(
+    header = "<tr><th>Feature / Competitor</th>" + "".join(
         f"<th>{esc(c.get('name', ''))}</th>" for c in competitors
     ) + "</tr>"
 
@@ -113,7 +113,7 @@ def build_simple_table(
     <section>
       <h2>{esc(title)}</h2>
       <table class="simple">
-        <thead><tr><th>竞品</th><th>{esc(title.replace("对比", ""))}</th></tr></thead>
+        <thead><tr><th>Competitor</th><th>{esc(title.replace(" Comparison", ""))}</th></tr></thead>
         <tbody>{''.join(rows)}</tbody>
       </table>
     </section>
@@ -129,9 +129,9 @@ def build_technical_section(competitors: list[dict[str, Any]]) -> str:
         )
     return f"""
     <section>
-      <h2>技术亮点</h2>
+      <h2>Technical Highlights</h2>
       <table class="simple">
-        <thead><tr><th>竞品</th><th>技术关键词</th></tr></thead>
+        <thead><tr><th>Competitor</th><th>Technical Keywords</th></tr></thead>
         <tbody>{''.join(rows)}</tbody>
       </table>
     </section>
@@ -157,7 +157,7 @@ def build_strategic_insights_section(insights: dict[str, Any]) -> str:
         risks_html += f"""
         <article class="insight-card">
           <p class="insight-title">{esc(item.get("risk", ""))}</p>
-          <p class="label">潜在影响</p>
+          <p class="label">Potential Impact</p>
           <p>{esc(item.get("impact", ""))}</p>
         </article>
         """
@@ -180,9 +180,9 @@ def build_strategic_insights_section(insights: dict[str, Any]) -> str:
 
       <h3 class="subsection">Strategic Recommendation</h3>
       <article class="insight-card highlight">
-        <p class="label">推荐切入方向</p>
+        <p class="label">Recommended Entry Direction</p>
         <p class="insight-title">{esc(rec.get("direction", ""))}</p>
-        <p class="label">推荐理由</p>
+        <p class="label">Rationale</p>
         {reasons_html}
       </article>
 
@@ -192,9 +192,9 @@ def build_strategic_insights_section(insights: dict[str, Any]) -> str:
       </div>
 
       <h3 class="subsection">Future Monitoring Metrics</h3>
-      <p class="pipeline-note">Competitive Intelligence Pipeline — 建议持续监控以下指标：</p>
+      <p class="pipeline-note">Competitive Intelligence Pipeline — metrics to monitor ongoing:</p>
       <table class="simple">
-        <thead><tr><th>指标</th><th>说明</th></tr></thead>
+        <thead><tr><th>Metric</th><th>Description</th></tr></thead>
         <tbody>{metrics_rows}</tbody>
       </table>
     </section>
@@ -206,9 +206,9 @@ def build_builders_perspective_section() -> str:
     <section class="builders-perspective-section">
       <h2>Builder's Perspective</h2>
       <article class="perspective-card">
-        <p>通过本次竞品分析可以看出，当前 AI Website Builder 赛道的竞争焦点高度集中于 Website Creation 环节——对话式生成、模板调用、一键部署已成为各产品的共性能力。然而，网站上线后的增长运营、SEO 优化、转化提升与客户获取，仍大量依赖人工执行或第三方工具补充，尚未被主流产品系统性整合。</p>
-        <p>从用户决策逻辑观察，SMB 与创业者购买此类产品的本质诉求并非「拥有一个网站」，而是「获得可衡量的业务结果」。当建站门槛持续下降，差异化价值将逐渐从 Build Website 向 Grow Website 迁移——即谁能更高效地承接上线后的获客、留存与营收闭环，谁更可能在下一阶段建立竞争优势。</p>
-        <p>本次样本中，仅个别竞品在定位上涉及 SEO 与获客能力，但尚未形成从创建到增长的完整产品叙事。这一结构性空白，值得在后续监控周期中持续跟踪与验证。</p>
+        <p>This competitive review shows that AI Website Builder rivalry is still concentrated on website creation—conversational generation, templates, and one-click deploy are becoming baseline capabilities. Post-launch growth, SEO, conversion optimization, and customer acquisition still rely heavily on manual work or third-party tools and are not systematically integrated by most incumbents.</p>
+        <p>From a buyer perspective, SMBs and founders are not purchasing a website; they are purchasing measurable business outcomes. As building gets cheaper, differentiation is likely to shift from Build Website to Grow Website—whoever better owns acquisition, retention, and revenue after launch gains the next competitive edge.</p>
+        <p>In this sample, only a few competitors emphasize SEO and lead generation in positioning, and none present a full create-to-grow narrative. That structural gap is worth tracking in future monitoring cycles.</p>
       </article>
     </section>
     """
@@ -220,11 +220,11 @@ def render_html(competitors: list[dict[str, Any]]) -> str:
     insights = generate_insights(competitors)
 
     return f"""<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Website Builder 竞品分析报告</title>
+  <title>AI Website Builder Competitive Analysis Report</title>
   <style>
     :root {{
       --bg: #f6f8fb;
@@ -299,29 +299,29 @@ def render_html(competitors: list[dict[str, Any]]) -> str:
 </head>
 <body>
   <header>
-    <h1>AI Website Builder 竞品分析报告</h1>
-    <p>竞品：{esc(names)} · 生成时间：{esc(generated_at)}</p>
+    <h1>AI Website Builder Competitive Analysis Report</h1>
+    <p>Competitors: {esc(names)} · Generated: {esc(generated_at)}</p>
   </header>
   <main>
     <section>
-      <h2>竞品概览</h2>
+      <h2>Competitor Overview</h2>
       <div class="grid">
         {build_overview_cards(competitors)}
       </div>
     </section>
 
     <section>
-      <h2>功能对比表</h2>
+      <h2>Feature Comparison</h2>
       {build_feature_matrix(competitors)}
     </section>
 
-    {build_simple_table(competitors, "pricing", "定价对比")}
-    {build_simple_table(competitors, "target_customer", "目标客户对比")}
+    {build_simple_table(competitors, "pricing", "Pricing Comparison")}
+    {build_simple_table(competitors, "target_customer", "Target Customer Comparison")}
     {build_technical_section(competitors)}
     {build_strategic_insights_section(insights)}
     {build_builders_perspective_section()}
   </main>
-  <footer>AI Website Builder Competitive Analysis · 基础工程骨架</footer>
+  <footer>AI Website Builder Competitive Intelligence Pipeline</footer>
 </body>
 </html>
 """
@@ -337,7 +337,7 @@ def generate_report(
     content = render_html(competitors)
     report_path.write_text(content, encoding="utf-8")
 
-    logger.info("报告已生成 -> %s", report_path)
+    logger.info("Report generated -> %s", report_path)
     return report_path
 
 
