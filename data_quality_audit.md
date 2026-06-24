@@ -1,6 +1,6 @@
 # Data Quality Audit — AI Website Builder Competitive Intelligence Pipeline
 
-**Audit date:** 2026-06-20  
+**Audit date:** 2026-06-24  
 **Data source:** `data/competitors.json` (live scrape)  
 **Collector:** `scripts/collect_competitors.py`
 
@@ -253,7 +253,7 @@ Keywords **present in raw HTML** but **absent from core_features**:
 
 ---
 
-## Appendix: Live Fetch Metrics (2026-06-20)
+## Appendix: Live Fetch Metrics (2026-06-24)
 
 | Site | Home HTML | Home body text | `<li>` count | Pricing page body text |
 |------|-----------|----------------|--------------|------------------------|
